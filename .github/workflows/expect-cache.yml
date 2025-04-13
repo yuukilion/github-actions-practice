@@ -1,0 +1,61 @@
+name: Expect Command Cache Example
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  # 手動実行のためのトリガーを追加
+  workflow_dispatch:
+
+jobs:
+  test-expect-cache:
+    runs-on: ubuntu-latest
+    steps:
+      # ステップ1: リポジトリをチェックアウト
+      - uses: actions/checkout@v4
+
+      # ステップ2: expectのキャッシュを確認
+      - name: Cache Expect Installation
+        id: cache-expect
+        uses: actions/cache@v4
+        with:
+          path: /usr/bin/expect
+          key: ${{ runner.os }}-expect-${{ hashFiles('/usr/bin/expect') }}
+      
+      # ステップ3: キャッシュの状態を表示
+      - name: Check Cache Status
+        run: |
+          if [ "${{ steps.cache-expect.outputs.cache-hit }}" == "true" ]; then
+            echo "✅ キャッシュがヒットしました。expectのインストールをスキップします。"
+          else
+            echo "❌ キャッシュミスです。expectをインストールします。"
+          fi
+
+      # ステップ4: expectコマンドをインストール（キャッシュミスの場合のみ）
+      - name: Install Expect
+        if: steps.cache-expect.outputs.cache-hit != 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y expect
+          echo "📦 expectをインストールしました"
+
+      # ステップ5: expectコマンドの動作確認
+      - name: Verify Expect Installation
+        run: |
+          which expect
+          expect -version
+          echo "🔍 expectコマンドが利用可能です。バージョン情報を表示しています。"
+
+      # ステップ6: シンプルなexpectスクリプトを実行
+      - name: Run Simple Expect Script
+        run: |
+          cat << 'EOF' > test.exp
+          #!/usr/bin/expect -f
+          spawn echo "Hello from expect!"
+          expect "Hello"
+          send_user "\nExpect script completed successfully!\n"
+          exit 0
+          EOF
+          chmod +x test.exp
+          ./test.exp
