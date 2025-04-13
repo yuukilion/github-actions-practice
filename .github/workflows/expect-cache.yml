@@ -20,7 +20,7 @@ jobs:
         id: cache-apt
         uses: actions/cache@v4
         with:
-          path: /var/cache/apt/archives
+          path: ~/.apt-cache
           key: ${{ runner.os }}-apt-expect-${{ hashFiles('**/expect-cache.yml') }}
 
       # ステップ3: キャッシュの状態を表示
@@ -35,6 +35,10 @@ jobs:
       # ステップ4: expectコマンドをインストール（キャッシュの有無にかかわらず必要）
       - name: Install Expect
         run: |
+          # キャッシュディレクトリを作成し、APT設定を追加
+          mkdir -p ~/.apt-cache
+          echo 'Dir::Cache::Archives "~/.apt-cache";' | sudo tee /etc/apt/apt.conf.d/01custom
+          
           # APTキャッシュがある場合、apt-get updateをスキップできる
           if [ "${{ steps.cache-apt.outputs.cache-hit }}" != "true" ]; then
             echo "APTパッケージリストを更新しています..."
