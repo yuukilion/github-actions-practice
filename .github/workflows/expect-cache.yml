@@ -36,7 +36,8 @@ jobs:
       - name: Install Expect
         run: |
           # キャッシュディレクトリを作成し、APT設定を追加
-          mkdir -p ~/.apt-cache
+          mkdir -p ~/.apt-cache/partial
+          sudo chmod -R 755 ~/.apt-cache
           echo 'Dir::Cache::Archives "~/.apt-cache";' | sudo tee /etc/apt/apt.conf.d/01custom
           
           # APTキャッシュがある場合、apt-get updateをスキップできる
