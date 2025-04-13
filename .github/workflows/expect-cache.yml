@@ -20,7 +20,7 @@ jobs:
         id: cache-apt
         uses: actions/cache@v4
         with:
-          path: ~/.apt-cache
+          path: ${{ github.workspace }}/.apt-cache
           key: ${{ runner.os }}-apt-expect-${{ hashFiles('**/expect-cache.yml') }}
 
       # ステップ3: キャッシュの状態を表示
@@ -36,9 +36,9 @@ jobs:
       - name: Install Expect
         run: |
           # キャッシュディレクトリを作成し、APT設定を追加
-          mkdir -p ~/.apt-cache/partial
-          sudo chmod -R 755 ~/.apt-cache
-          echo 'Dir::Cache::Archives "~/.apt-cache";' | sudo tee /etc/apt/apt.conf.d/01custom
+          mkdir -p ${{ github.workspace }}/.apt-cache/partial
+          chmod -R 777 ${{ github.workspace }}/.apt-cache
+          echo 'Dir::Cache::Archives "${{ github.workspace }}/.apt-cache";' | sudo tee /etc/apt/apt.conf.d/01custom
           
           # APTキャッシュがある場合、apt-get updateをスキップできる
           if [ "${{ steps.cache-apt.outputs.cache-hit }}" != "true" ]; then
