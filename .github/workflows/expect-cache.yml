@@ -76,3 +76,16 @@ jobs:
           EOF
           chmod +x test.exp
           ./test.exp
+          
+      # ステップ7: キャッシュディレクトリのクリーンアップ - キャッシュ保存前に権限を修正
+      - name: Cleanup Cache Permissions
+        if: always()  # 他のステップが失敗しても常に実行
+        run: |
+          echo "🧹 キャッシュディレクトリの権限を修正しています..."
+          # lockファイルを削除
+          rm -f ${{ github.workspace }}/.apt-cache/lock
+          # partialディレクトリのパーミッションを修正
+          chmod -R 755 ${{ github.workspace }}/.apt-cache
+          # キャッシュディレクトリの所有者をランナーユーザーに変更
+          sudo chown -R $(id -u):$(id -g) ${{ github.workspace }}/.apt-cache
+          echo "✅ キャッシュディレクトリのクリーンアップが完了しました"
