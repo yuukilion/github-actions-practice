@@ -1,0 +1,28 @@
+name: Socat Custom Image Workflow
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  run-with-custom-image:
+    runs-on: ubuntu-latest
+
+    container:
+      image: ghcr.io/yuukilion/my-socat-image:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Verify socat installation
+        run: |
+          echo "Checking socat version..."
+          socat -V
+          echo "Checking socat path..."
+          which socat
+          echo "Socat is available!"
