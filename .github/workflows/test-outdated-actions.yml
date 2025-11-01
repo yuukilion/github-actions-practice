@@ -35,7 +35,7 @@ jobs:
       # Intentionally using old commit hash of actions/upload-artifact
       # This is using an older v3 commit hash
       - name: Upload artifact (outdated)
-        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: test-artifact
           path: README.md
