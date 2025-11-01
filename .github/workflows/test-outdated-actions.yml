@@ -14,18 +14,18 @@ jobs:
       # Current latest v4 uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 (v4.1.1)
       # This is using an older v3 commit hash from 2022
       - name: Checkout code (outdated)
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.0.2 from 2022
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.0.2
 
       # Intentionally using old commit hash of actions/setup-node
       # Current latest v4 uses newer hashes
       # This is using an older v3 commit hash
       - name: Setup Node.js (outdated)
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0 from 2023
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
 
       # Intentionally using old commit hash of actions/cache
       # This is using an older v3 commit hash
       - name: Cache dependencies (outdated)
-        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1 from 2023
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -35,7 +35,7 @@ jobs:
       # Intentionally using old commit hash of actions/upload-artifact
       # This is using an older v3 commit hash
       - name: Upload artifact (outdated)
-        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2 from 2023
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         with:
           name: test-artifact
           path: README.md
