@@ -1,0 +1,47 @@
+name: Debug Ubuntu Slim Environment
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  debug-env:
+    runs-on: ubuntu-slim
+    steps:
+      - name: System Info
+        run: |
+          echo "=== OS Information ==="
+          cat /etc/os-release
+          echo "=== Kernel Information ==="
+          uname -a
+          echo "=== CPU Information ==="
+          lscpu
+          echo "=== Memory Information ==="
+          free -h
+          echo "=== Disk Information ==="
+          df -h
+
+      - name: Check Pre-installed Tools
+        run: |
+          echo "=== Git ==="
+          git --version || echo "Git not found"
+          echo "=== Docker ==="
+          docker --version || echo "Docker not found"
+          echo "=== Curl ==="
+          curl --version || echo "Curl not found"
+
+      - name: Try Install Socat
+        run: |
+          echo "=== Updating apt ==="
+          sudo apt-get update
+          echo "=== Installing socat ==="
+          sudo apt-get install -y socat
+          socat -V
+
+      - name: Try Install Docker (Experiment)
+        continue-on-error: true
+        run: |
+          echo "=== Attempting to install docker.io ==="
+          sudo apt-get install -y docker.io
+          docker --version || echo "Docker installed but binary not found?"
