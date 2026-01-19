@@ -18,7 +18,7 @@ jobs:
       # ステップ2: APTキャッシュを設定
       - name: Cache APT Packages
         id: cache-apt
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.2
         with:
           path: ${{ github.workspace }}/.apt-cache
           key: ${{ runner.os }}-apt-expect
