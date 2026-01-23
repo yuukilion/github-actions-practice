@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # ステップ1: リポジトリをチェックアウト
-      - uses: actions/checkout@v5.0.0
+      - uses: actions/checkout@v6.0.2
 
       # ステップ2: APTキャッシュを設定
       - name: Cache APT Packages

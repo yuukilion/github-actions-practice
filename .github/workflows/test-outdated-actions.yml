@@ -14,7 +14,7 @@ jobs:
       # Current latest v4 uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 (v4.1.1)
       # This is using an older v3 commit hash from 2022
       - name: Checkout code (outdated)
-        uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493 # v3.0.2
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v3.0.2
 
       # Intentionally using old commit hash of actions/setup-node
       # Current latest v4 uses newer hashes
