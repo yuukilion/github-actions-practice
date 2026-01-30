@@ -25,7 +25,7 @@ jobs:
       # Intentionally using old commit hash of actions/cache
       # This is using an older v3 commit hash
       - name: Cache dependencies (outdated)
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        uses: actions/cache@b45623637f5737c8022070213e69ba8fd6dfe041 # v4.3.0
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
